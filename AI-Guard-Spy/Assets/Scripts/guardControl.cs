@@ -14,15 +14,19 @@ public class guardControl : MonoBehaviour
     private enum State
     {
         Patrolling,
-        Chasing
+        Chasing,
+        Searching
     }
 
     private State currentState = State.Patrolling;
 
     private GameObject spy;
+    private Vector3 spyLastLocation;
 
     public float FOV;
     public float viewDistance;
+
+    public LayerMask layerMask;
     void Start()
     {
         spy = GameObject.FindGameObjectWithTag("Spy");
@@ -48,7 +52,11 @@ public class guardControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(currentState == State.Patrolling)
+        Vector3 directionToPlayer = spy.transform.position - transform.position;
+        RaycastHit hit;
+        Physics.Raycast(transform.position, directionToPlayer, out hit, viewDistance, layerMask);
+
+        if (currentState == State.Patrolling)
         {
             if (!agent.pathPending && agent.remainingDistance < 0.5f)
             {
@@ -56,7 +64,8 @@ public class guardControl : MonoBehaviour
                 GoToNextPoint();
             }
 
-            if (Vector3.Distance(transform.position, spy.transform.position) < viewDistance && Vector3.Angle(transform.position, spy.transform.position) < FOV)
+            // if the ray hits the spy chase commenceth
+            if (hit.transform.CompareTag("Spy"))
             {
                 Debug.Log("Spy sighted!");
                 currentState = State.Chasing;
@@ -64,19 +73,49 @@ public class guardControl : MonoBehaviour
         }
         else if (currentState == State.Chasing)
         {
-            agent.destination = spy.transform.position;
+            // if the ray hits keep chasing
+            if (hit.transform.CompareTag("Spy"))
+            {
+                agent.destination = spy.transform.position;
+            }
+            else
+            {
+                currentState = State.Searching;
+                getSpyLastLocation();
+            }
         }
-        
+        else if (currentState == State.Searching)
+        {
+            agent.destination = spyLastLocation;
+
+            // once we are at the last known location, have a look around
+            if(!agent.pathPending && agent.remainingDistance < 0.5f)
+            {
+                Invoke("SearchArea", 3f);
+            }
+        }
+    }
+
+    private void getSpyLastLocation()
+    {
+        spyLastLocation = spy.transform.position;
+    }
+
+    private void SearchArea()
+    {
+        currentState = State.Patrolling;
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.blue;
-        float y;
-        y = viewDistance / Mathf.Tan(((180 - FOV) / 2)* Mathf.PI/180);
-        Vector3 drawPoint = new Vector3(transform.position.x + y, transform.position.y, transform.position.z + viewDistance);
-        Gizmos.DrawLine(transform.position, drawPoint);
-        Vector3 drawPoint2 = new Vector3(transform.position.x - y, transform.position.y, transform.position.z + viewDistance);
-        Gizmos.DrawLine(transform.position, drawPoint2);
+        if(currentState == State.Chasing)
+        {
+            Gizmos.color = Color.green;
+        }
+        else
+        {
+            Gizmos.color = Color.magenta;
+        }
+        Gizmos.DrawLine(transform.position, spy.transform.position);
     }
 }

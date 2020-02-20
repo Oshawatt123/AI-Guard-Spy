@@ -16,6 +16,8 @@ public class spyControl : MonoBehaviour
     private bool spotted = false;
 
     public Transform hidingSpot;
+
+    public LayerMask layerMask;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,8 +30,12 @@ public class spyControl : MonoBehaviour
     {
         if(!spotted)
         {
-            Debug.Log("Distance to guard: " + Vector3.Distance(transform.position, guard.transform.position));
-            if (Vector3.Distance(transform.position, guard.transform.position) < viewDistance && Vector3.Angle(transform.position, guard.transform.position) < FOV)
+            Vector3 directionToGuard = guard.transform.position - transform.position;
+            RaycastHit hit;
+            Physics.Raycast(transform.position, directionToGuard, out hit, viewDistance, layerMask);
+
+            // if the ray hits the spy chase commenceth
+            if (hit.transform.CompareTag("Guard"))
             {
                 Debug.Log("Spy sighted!");
                 spotted = true;
@@ -43,12 +49,6 @@ public class spyControl : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        float y;
-        y = viewDistance / Mathf.Tan(((180 - FOV) / 2) * Mathf.PI / 180);
-        Vector3 drawPoint = new Vector3(transform.position.x + y, transform.position.y, transform.position.z + viewDistance);
-        Gizmos.DrawLine(transform.position, drawPoint);
-        Vector3 drawPoint2 = new Vector3(transform.position.x - y, transform.position.y, transform.position.z + viewDistance);
-        Gizmos.DrawLine(transform.position, drawPoint2);
+
     }
 }

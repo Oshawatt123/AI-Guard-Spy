@@ -2247,7 +2247,6 @@ GameObject:
   - component: {fileID: 1108503614}
   - component: {fileID: 1108503613}
   - component: {fileID: 1108503612}
-  - component: {fileID: 1108503615}
   - component: {fileID: 1108503611}
   - component: {fileID: 1108503616}
   - component: {fileID: 1108503617}
@@ -2332,34 +2331,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1108503615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1108503610}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3be3065d3448f0408b892dab8dc6970, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  path:
-  - {fileID: 1794178761}
-  - {fileID: 357221505}
-  - {fileID: 587387648}
-  - {fileID: 791695285}
-  - {fileID: 552465042}
-  - {fileID: 288430499}
-  - {fileID: 507570023}
-  - {fileID: 76505568}
-  - {fileID: 615683672}
-  - {fileID: 1762955818}
-  FOV: 60
-  viewDistance: 6
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 1
 --- !u!195 &1108503616
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2640,7 +2611,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 4.5
+  m_Speed: 7.1
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -4181,7 +4152,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1922136363}
   m_LocalRotation: {x: -0, y: -0.6964205, z: -0, w: 0.717634}
-  m_LocalPosition: {x: 12.8, y: 2.39, z: -9.54}
+  m_LocalPosition: {x: 2.66, y: 2.39, z: -14.21}
   m_LocalScale: {x: 1, y: 3.4078, z: 3.7228198}
   m_Children: []
   m_Father: {fileID: 0}

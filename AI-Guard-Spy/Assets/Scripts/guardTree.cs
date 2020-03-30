@@ -10,11 +10,15 @@ public class guardTree : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        BT_Selector rootSelector = new BT_Selector();
-        rootSelector.Test();
         CanSeePlayer CSP = new CanSeePlayer(transform);
-        CSP.Test();
-        rootSelector.AddNode(CSP);
+        ChaseSpy CS = new ChaseSpy(transform);
+        BT_Sequencer seq = new BT_Sequencer();
+        seq.AddNode(CSP);
+        seq.AddNode(CS);
+
+        BT_Selector rootSelector = new BT_Selector();
+        rootSelector.AddNode(seq);
+        rootSelector.AddNode(new Patrol(transform, path));
 
         tree.AddNode(rootSelector);
         tree.AddNode(new Patrol(transform, path));

@@ -85,11 +85,11 @@ namespace BehaviourTree
                 return NodeState.NODE_RUNNING;
 
             // if they succeed, we need to see if all have succeeded
-            if(childNodeReturnValue == NodeState.NODE_SUCCESS)
+            if (childNodeReturnValue == NodeState.NODE_SUCCESS)
             {
                 currentNodeIndex += 1;
                 // all nodes have returned success, so we return success
-                if(currentNodeIndex >= sequencerNodes.Count)
+                if (currentNodeIndex >= sequencerNodes.Count)
                 {
                     return NodeState.NODE_SUCCESS;
                 }
@@ -100,7 +100,7 @@ namespace BehaviourTree
             // if anything fails, we fail immediately
             return NodeState.NODE_FAILURE;
         }
-
+    }
     public class BT_Behaviour : BT_Node
     {
 

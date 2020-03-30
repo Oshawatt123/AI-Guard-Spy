@@ -2250,6 +2250,7 @@ GameObject:
   - component: {fileID: 1108503615}
   - component: {fileID: 1108503611}
   - component: {fileID: 1108503616}
+  - component: {fileID: 1108503617}
   m_Layer: 0
   m_Name: Guard
   m_TagString: Guard
@@ -2338,7 +2339,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1108503610}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3be3065d3448f0408b892dab8dc6970, type: 3}
   m_Name: 
@@ -2381,6 +2382,29 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1108503617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1108503610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e006060b7b7f76f4580c3cb9d8d2fef5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  path:
+  - {fileID: 1794178761}
+  - {fileID: 357221505}
+  - {fileID: 587387648}
+  - {fileID: 791695285}
+  - {fileID: 552465042}
+  - {fileID: 288430499}
+  - {fileID: 507570023}
+  - {fileID: 76505568}
+  - {fileID: 615683672}
+  - {fileID: 1762955818}
 --- !u!1 &1112742882
 GameObject:
   m_ObjectHideFlags: 0
@@ -2843,7 +2867,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!195 &1217319603
 NavMeshAgent:
   m_ObjectHideFlags: 0

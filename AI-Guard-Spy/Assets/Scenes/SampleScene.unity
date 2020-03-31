@@ -2376,6 +2376,7 @@ MonoBehaviour:
   - {fileID: 76505568}
   - {fileID: 615683672}
   - {fileID: 1762955818}
+  chaseCoolDown: 5
 --- !u!1 &1112742882
 GameObject:
   m_ObjectHideFlags: 0
@@ -4152,8 +4153,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1922136363}
   m_LocalRotation: {x: -0, y: -0.6964205, z: -0, w: 0.717634}
-  m_LocalPosition: {x: 2.66, y: 2.39, z: -14.21}
-  m_LocalScale: {x: 1, y: 3.4078, z: 3.7228198}
+  m_LocalPosition: {x: 2.7, y: 2.39, z: -12.87}
+  m_LocalScale: {x: 2.3819, y: 3.4078, z: 3.7228198}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 9

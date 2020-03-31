@@ -38,25 +38,34 @@ namespace BehaviourTree
         public override NodeState tick()
         {
             // tick the node we are on
+            Debug.Log("Selector child index : " + currentNodeIndex);
             childNodeReturnValue = selectorNodes[currentNodeIndex].tick();
 
             // if they're running still, then we say we're still running
             if (childNodeReturnValue == NodeState.NODE_RUNNING)
+            {
+                Debug.Log("Selector RUNNING");
                 return NodeState.NODE_RUNNING;
+            }
 
             // if the node fails, move on to the next node if available
             if(childNodeReturnValue == NodeState.NODE_FAILURE)
             {
                 currentNodeIndex += 1;
-                if (currentNodeIndex > selectorNodes.Count)
+                if (currentNodeIndex > selectorNodes.Count - 1)
+                {
+                    currentNodeIndex = 0;
+                    Debug.Log("Selector FAILURE");
                     return NodeState.NODE_FAILURE;
+                }
 
-                currentNodeIndex = 0;
+                Debug.Log("Selector RUNNING");
                 return NodeState.NODE_RUNNING;
             }
 
             // at this point, we know that a node has succeeded so we return a success
             currentNodeIndex = 0;
+            Debug.Log("Selector SUCCESS");
             return NodeState.NODE_SUCCESS;
         }
 
@@ -82,7 +91,10 @@ namespace BehaviourTree
 
             // if they're running still, then we say we're still running
             if (childNodeReturnValue == NodeState.NODE_RUNNING)
+            {
+                Debug.Log("Sequencer RUNNING");
                 return NodeState.NODE_RUNNING;
+            }
 
             // if they succeed, we need to see if all have succeeded
             if (childNodeReturnValue == NodeState.NODE_SUCCESS)
@@ -91,13 +103,17 @@ namespace BehaviourTree
                 // all nodes have returned success, so we return success
                 if (currentNodeIndex >= sequencerNodes.Count)
                 {
+                    currentNodeIndex = 0;
+                    Debug.Log("Sequencer SUCCESS");
                     return NodeState.NODE_SUCCESS;
                 }
                 // if we've got more to process we continue running
+                Debug.Log("Sequencer RUNNING");
                 return NodeState.NODE_RUNNING;
             }
 
             // if anything fails, we fail immediately
+            Debug.Log("Sequencer FAILURE");
             return NodeState.NODE_FAILURE;
         }
     }

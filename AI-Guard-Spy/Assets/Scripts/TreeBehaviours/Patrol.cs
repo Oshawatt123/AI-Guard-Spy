@@ -12,11 +12,12 @@ public class Patrol : BT_Behaviour
 
     private Transform self;
 
-    public Patrol(Transform self, Transform[] _path)
+    public Patrol(Transform self)
     {
-        path = _path;
         agent = self.GetComponent<NavMeshAgent>();
         agent.autoBraking = false;
+
+        path = self.GetComponent<guardTree>().getPath();
     }
     void GoToNextPoint()
     {
@@ -39,7 +40,7 @@ public class Patrol : BT_Behaviour
             Debug.Log("Agent Met goal");
             GoToNextPoint();
         }
-
-        return NodeState.NODE_RUNNING;
+        Debug.Log("Patrol SUCCESS");
+        return NodeState.NODE_SUCCESS;
     }
 }

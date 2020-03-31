@@ -6,6 +6,8 @@ using BehaviourTree;
 public class CanSeePlayer : BT_Behaviour
 {
     private Transform self;
+    private bool sawLastFrame;
+
     public CanSeePlayer(Transform guardTransform)
     {
         self = guardTransform;
@@ -14,13 +16,28 @@ public class CanSeePlayer : BT_Behaviour
     {
         Vector3 directionToPlayer = GetPlayerPosition() - self.position;
         RaycastHit hit;
-        Physics.Raycast(self.position, directionToPlayer, out hit, 10);
 
-        if(hit.transform.CompareTag("Spy"))
+        // if the raycast hits anything
+        if(Physics.Raycast(self.position, directionToPlayer, out hit, 10))
         {
-            return NodeState.NODE_SUCCESS;
+            // if we see the spy
+            if (hit.transform.CompareTag("Spy"))
+            {
+                sawLastFrame = true;
+                Debug.Log("CanSeePlayer SUCCESS");
+                return NodeState.NODE_SUCCESS;
+            }
         }
 
+        // if we dont see the spy, have we just lost sight?
+        if (sawLastFrame)
+        {
+            // start the timer on the local blackboard
+            self.GetComponent<guardTree>().LostSight(GetPlayerPosition());
+            sawLastFrame = false;
+        }
+
+        Debug.Log("CanSeePlayer FAILURE");
         return NodeState.NODE_FAILURE;
     }
 }

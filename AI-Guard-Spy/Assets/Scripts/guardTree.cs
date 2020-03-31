@@ -6,7 +6,13 @@ using BehaviourTree;
 public class guardTree : MonoBehaviour
 {
     private BT_Tree tree = new BT_Tree();
+
+    // local blackboard variables
     public Transform[] path;
+    public float chaseCoolDown;
+    private float chaseCoolDowntimer = 0;
+    private Vector3 lastKnownLocation;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,17 +22,45 @@ public class guardTree : MonoBehaviour
         seq.AddNode(CSP);
         seq.AddNode(CS);
 
+        BT_Selector sel = new BT_Selector();
+        sel.AddNode(seq);
+        sel.AddNode(new GoToLastKnownLocation(transform));
+
         BT_Selector rootSelector = new BT_Selector();
-        rootSelector.AddNode(seq);
-        rootSelector.AddNode(new Patrol(transform, path));
+        rootSelector.AddNode(sel);
+        rootSelector.AddNode(new Patrol(transform));
 
         tree.AddNode(rootSelector);
-        tree.AddNode(new Patrol(transform, path));
     }
 
     // Update is called once per frame
     void Update()
     {
         tree.Tick();
+
+        chaseCoolDowntimer -= Time.deltaTime;
+    }
+
+    // local blackboard methods
+
+    public Transform[] getPath()
+    {
+        return path;
+    }
+    public void LostSight(Vector3 spyLastKnowLocation)
+    {
+        Debug.Log("Lost sight of spy");
+        lastKnownLocation = spyLastKnowLocation;
+        chaseCoolDowntimer = chaseCoolDown;
+    }
+
+    public bool inCoolDown()
+    {
+        return chaseCoolDowntimer > 0;
+    }
+
+    public Vector3 getLastKnownLocation()
+    {
+        return lastKnownLocation;
     }
 }

@@ -19,6 +19,8 @@ public class ChaseSpy : BT_Behaviour
     public override NodeState tick()
     {
         agent.destination = GetPlayerPosition();
-        return NodeState.NODE_RUNNING;
+
+        Debug.Log("ChaseSpy SUCCESS");
+        return NodeState.NODE_SUCCESS;
     }
 }

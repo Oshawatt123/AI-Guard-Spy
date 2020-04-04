@@ -17,6 +17,8 @@ public class CanSeePlayer : BT_Behaviour
         Vector3 directionToPlayer = GetPlayerPosition() - self.position;
         RaycastHit hit;
 
+        
+
         // if the raycast hits anything
         if(Physics.Raycast(self.position, directionToPlayer, out hit, 10))
         {
@@ -25,6 +27,8 @@ public class CanSeePlayer : BT_Behaviour
             {
                 sawLastFrame = true;
                 Debug.Log("CanSeePlayer SUCCESS");
+                self.GetComponent<guardTree>().setMoveToLocation(GetPlayerPosition());
+                Debug.DrawLine(self.position, GetPlayerPosition(), Color.green);
                 return NodeState.NODE_SUCCESS;
             }
         }
@@ -37,6 +41,7 @@ public class CanSeePlayer : BT_Behaviour
             sawLastFrame = false;
         }
 
+        Debug.DrawLine(self.position, GetPlayerPosition(), Color.red);
         Debug.Log("CanSeePlayer FAILURE");
         return NodeState.NODE_FAILURE;
     }

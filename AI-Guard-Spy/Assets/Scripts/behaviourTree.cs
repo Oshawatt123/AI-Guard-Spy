@@ -45,13 +45,17 @@ namespace BehaviourTree
             if (childNodeReturnValue == NodeState.NODE_RUNNING)
             {
                 Debug.Log("Selector RUNNING");
+                currentNodeIndex = 0;
                 return NodeState.NODE_RUNNING;
             }
 
             // if the node fails, move on to the next node if available
             if(childNodeReturnValue == NodeState.NODE_FAILURE)
             {
+                // keep on going
                 currentNodeIndex += 1;
+
+                // until we hit the end
                 if (currentNodeIndex > selectorNodes.Count - 1)
                 {
                     currentNodeIndex = 0;
@@ -133,19 +137,16 @@ namespace BehaviourTree
 
     public class BT_Tree
     {
-        List<BT_Node> tree = new List<BT_Node>();
+        BT_Node root;
 
-        public void AddNode(BT_Node node)
+        public void SetRoot(BT_Node node)
         {
-            tree.Add(node);
+            root = node;
         }
 
         public void Tick()
         {
-            foreach(BT_Node node in tree)
-            {
-                node.tick();
-            }
+            root.tick();
         }
     }
 }

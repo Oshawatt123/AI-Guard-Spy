@@ -20,6 +20,14 @@ public class GoToLastKnownLocation : BT_Behaviour
         if(localBB.inCoolDown())
         {
             agent.destination = localBB.getLastKnownLocation();
+
+            var path = agent.path;
+
+            for (int i = 0; i < path.corners.Length - 1; i++)
+            {
+                Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.red);
+            }
+
             Debug.Log("LastKnownLocation SUCCESS");
             return NodeState.NODE_SUCCESS;
         }

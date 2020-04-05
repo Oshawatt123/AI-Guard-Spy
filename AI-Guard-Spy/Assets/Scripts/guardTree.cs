@@ -13,7 +13,7 @@ public class guardTree : MonoBehaviour
     // local blackboard variables
     public Transform path;
     private List<Transform> _path = new List<Transform>();
-    public float chaseCoolDown;
+    private float chaseCoolDown;
     private float chaseCoolDowntimer = 0;
     private Vector3 lastKnownLocation;
 
@@ -70,6 +70,7 @@ public class guardTree : MonoBehaviour
         BT_Sequencer coffeeSequencer = new BT_Sequencer();
         coffeeSequencer.AddNode(new GoToPoint(transform));
         coffeeSequencer.AddNode(new guardDrinkCoffee(transform));
+        checkCoffeeSequencer.AddNode(coffeeSequencer);
 
         BT_Selector IdleSelector = new BT_Selector();
         IdleSelector.AddNode(checkSleepSequencer);
@@ -85,6 +86,7 @@ public class guardTree : MonoBehaviour
 
         fatigue = Random.Range(60, 80);
         energy = Random.Range(60, 80);
+        chaseCoolDown = Random.Range(1, 3);
 
         generatePath();
     }
@@ -176,6 +178,7 @@ public class guardTree : MonoBehaviour
 
     public bool needsSleep()
     {
+        Debug.LogError((fatigue < fatigueThreshold));
         return fatigue < fatigueThreshold;
     }
 

@@ -20,6 +20,7 @@ public class GoToPoint : BT_Behaviour
     public override NodeState tick()
     {
         agent.destination = localBB.getMoveToLocation();
+
         //Debug.Log("GoToPoint : " + agent.destination);
         var path = agent.path;
 
@@ -28,7 +29,7 @@ public class GoToPoint : BT_Behaviour
             Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.blue);
         }
 
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        if (!agent.pathPending && agent.remainingDistance < 1.0f)
         {
             return NodeState.NODE_SUCCESS;
         }

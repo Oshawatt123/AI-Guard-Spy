@@ -16,6 +16,7 @@ public class guardSleep : BT_Behaviour
 
     public override NodeState tick()
     {
+        Debug.LogError("guardSleep Started");
         if(!startedSleeping)
         {
             localBB.startSleep();
@@ -24,10 +25,13 @@ public class guardSleep : BT_Behaviour
 
         if (localBB.sleeping())
         {
+            Debug.LogError("guardSleep Running");
             return NodeState.NODE_RUNNING;
         }
+
         localBB.endSleep();
         startedSleeping = false;
+        Debug.LogError("guardSleep ended");
         return NodeState.NODE_SUCCESS;
     }
 }

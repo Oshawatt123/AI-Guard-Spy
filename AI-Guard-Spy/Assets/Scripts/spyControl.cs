@@ -12,26 +12,26 @@ public class spyControl : MonoBehaviour
     public float FOV;
     public float viewDistance;
 
-    public GameObject guard;
+    public GameObject[] guards;
 
     private bool spotted = false;
 
     private bool crackingSafe = false;
-    public float safeCrackTime;
+    private float safeCrackTime;
     private float safeCrackTimer = 0;
     public float safeCrackNoise;
 
     private bool hasTreasure = false;
 
-    public float hidingTime;
-    public Transform hidingSpot;
+    private float hidingTime;
+    public Transform[] hidingSpots;
     public Transform exit;
 
     public bool guardHearsMe = false;
     public float guardHearingDistance = 0;
     public bool noisePathPending = true;
 
-    private float health = 100;
+    private bool win = false;
 
     public LayerMask layerMask;
     // Start is called before the first frame update
@@ -39,6 +39,9 @@ public class spyControl : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         agent.destination = targets[targetIndex].position;
+
+        safeCrackTime = Random.Range(2, 10);
+        hidingTime = Random.Range(5, 10);
     }
 
     // Update is called once per frame
@@ -60,28 +63,38 @@ public class spyControl : MonoBehaviour
             {
                 // get next treasure
                 targetIndex += 1;
-                hasTreasure = false;
-                agent.destination = targets[targetIndex].position;
+                if(!(targetIndex >= targets.Length))
+                {
+                    hasTreasure = false;
+                    agent.destination = targets[targetIndex].position;
+                }
+                else
+                {
+                    GameObject.Find("Canvas").GetComponent<EndGame>().SpyWin();
+                    win = true;
+                }
             }
         }
 
         else if (!spotted)
         {
-            Vector3 directionToGuard = guard.transform.position - transform.position;
-            RaycastHit hit;
-
-            // check if we see the guard
-            if (Physics.Raycast(transform.position, directionToGuard, out hit, viewDistance, layerMask))
+            foreach(GameObject guard in guards)
             {
-                // if the ray hits the spy chase commenceth
-                if (hit.transform.CompareTag("Guard"))
+                Vector3 directionToGuard = guard.transform.position - transform.position;
+                RaycastHit hit;
+
+                // check if we see the guard
+                if (Physics.Raycast(transform.position, directionToGuard, out hit, viewDistance, layerMask))
                 {
-                    Debug.Log("Spy sighted!");
-                    spotted = true;
-                    crackingSafe = false;
+                    // if the ray hits the spy chase commenceth
+                    if (hit.transform.CompareTag("Guard"))
+                    {
+                        Debug.Log("Spy sighted!");
+                        spotted = true;
+                        crackingSafe = false;
+                    }
                 }
             }
-
             // check if we are at the safe
             if(Vector3.Distance(transform.position, targets[targetIndex].position) < 1 && !crackingSafe)
             {
@@ -109,7 +122,19 @@ public class spyControl : MonoBehaviour
         else
         {
             agent.speed = 5f;
-            agent.destination = hidingSpot.position;
+
+            // get closest hiding spot
+            Vector3 closestSpot = hidingSpots[0].position;
+
+            foreach(Transform spot in hidingSpots)
+            {
+                if(Vector3.Distance(spot.position, transform.position) < Vector3.Distance(closestSpot, transform.position))
+                {
+                    closestSpot = spot.position;
+                }
+            }
+
+            agent.destination = closestSpot;
             if (!agent.pathPending && agent.remainingDistance < 0.5)
             {
                 // we are at the hiding spot. hide for some time, and go back to what we were doing
@@ -118,44 +143,40 @@ public class spyControl : MonoBehaviour
         }        
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if(collision.CompareTag("Guard"))
-        {
-            health -= 1;
-        }
-    }
-
     private void MakeNoise(float amplitude)
     {
         // cache current destination
         //Vector3 currentDestination = agent.destination;
 
         // check if the guard can hear us
-        agent.destination = guard.transform.position;
-
-        var path = agent.path;
-
-
-        guardHearingDistance = calculatePathLength(agent.path.corners);
-        noisePathPending = agent.pathPending;
-
-        if (!agent.pathPending && guardHearingDistance < amplitude)
+        foreach(GameObject guard in guards)
         {
-            guardHearsMe = true;
-            guard.GetComponent<guardTree>().PlayerHeard();
-            for (int i = 0; i < path.corners.Length - 1; i++)
+            agent.destination = guard.transform.position;
+
+            var path = agent.path;
+
+
+            guardHearingDistance = calculatePathLength(agent.path.corners);
+            noisePathPending = agent.pathPending;
+
+            if (!agent.pathPending && guardHearingDistance < amplitude)
             {
-                Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.green);
+                guardHearsMe = true;
+                guard.GetComponent<guardTree>().PlayerHeard();
+                for (int i = 0; i < path.corners.Length - 1; i++)
+                {
+                    Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.green);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < path.corners.Length - 1; i++)
+                {
+                    Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.blue);
+                }
             }
         }
-        else
-        {
-            for (int i = 0; i < path.corners.Length - 1; i++)
-            {
-                Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.blue);
-            }
-        }
+        
 
         // reset current pathfinding
         //agent.destination = currentDestination;
@@ -185,6 +206,17 @@ public class spyControl : MonoBehaviour
 
 
         return pathLength;
+    }
+
+    public bool Won()
+    {
+        return win;
+    }
+
+    public void Die()
+    {
+        agent.speed = 0;
+        Time.timeScale = 0.4f;
     }
 
     IEnumerator hide()

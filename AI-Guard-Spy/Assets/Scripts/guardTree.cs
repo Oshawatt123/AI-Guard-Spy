@@ -9,6 +9,10 @@ public class guardTree : MonoBehaviour
     public Transform player;
 
     private BT_Tree tree = new BT_Tree();
+    public BT_Tree getTree()
+    {
+        return tree;
+    }
 
     // local blackboard variables
     public Transform path;

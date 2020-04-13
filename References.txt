@@ -1,2 +1,6 @@
+Behaviour Trees
 https://www.youtube.com/watch?v=6VBCXvfNlCM&fbclid=IwAR3eKsDBV6KQe3tIPwm75XVmlyAvs3Tz63g6xp_5u4VZby0MJ3m6IZqndc4
 https://www.gamasutra.com/blogs/ChrisSimpson/20140717/221339/Behavior_trees_for_AI_How_they_work.php
+
+Editor Scripting
+https://stackoverflow.com/questions/17593101/how-to-write-a-gui-editor-for-graph-or-tree-structures

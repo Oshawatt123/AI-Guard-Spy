@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTree;
 
-public class needCoffee : BT_Behaviour
+public class guardDrinkCoffee : BT_Behaviour
 {
     private Transform self;
     private guardTree localBB;
-    public needCoffee(Transform _self)
+    public guardDrinkCoffee(Transform _self)
     {
         self = _self;
         localBB = self.GetComponent<guardTree>();
@@ -15,11 +15,8 @@ public class needCoffee : BT_Behaviour
 
     public override NodeState tick()
     {
-        if(localBB.needsCoffee())
-        {
-            localBB.getCoffee();
-            return NodeState.NODE_SUCCESS;
-        }
-        return NodeState.NODE_FAILURE;
+        localBB.drinkCoffee();
+        nodeState = NodeState.NODE_SUCCESS;
+        return NodeState.NODE_SUCCESS;
     }
 }

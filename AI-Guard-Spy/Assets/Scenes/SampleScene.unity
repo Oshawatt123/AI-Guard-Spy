@@ -746,9 +746,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1861757651}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &43263340 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1457333449703671671, guid: 9b3f97272bf6fad4d8ff0b36f1f6a6b0,
+--- !u!4 &43263344 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1457333449703671667, guid: 9b3f97272bf6fad4d8ff0b36f1f6a6b0,
     type: 3}
   m_PrefabInstance: {fileID: 5099774645815572101}
   m_PrefabAsset: {fileID: 0}
@@ -8183,9 +8183,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 832658748}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &950749495 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1457333449703671671, guid: 9b3f97272bf6fad4d8ff0b36f1f6a6b0,
+--- !u!4 &950749499 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1457333449703671667, guid: 9b3f97272bf6fad4d8ff0b36f1f6a6b0,
     type: 3}
   m_PrefabInstance: {fileID: 225977419}
   m_PrefabAsset: {fileID: 0}
@@ -9194,9 +9194,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1105156327}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1108503610 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1457333449703671671, guid: 9b3f97272bf6fad4d8ff0b36f1f6a6b0,
+--- !u!4 &1108503614 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1457333449703671667, guid: 9b3f97272bf6fad4d8ff0b36f1f6a6b0,
     type: 3}
   m_PrefabInstance: {fileID: 1457333450812140365}
   m_PrefabAsset: {fileID: 0}
@@ -9436,9 +9436,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1128359841}
-  - component: {fileID: 1128359836}
   - component: {fileID: 1128359838}
   - component: {fileID: 1128359837}
+  - component: {fileID: 1128359839}
   m_Layer: 20
   m_Name: Spy
   m_TagString: Spy
@@ -9446,39 +9446,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1128359836
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1128359835}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d111e18051b47564fa7fd3c1d5c48813, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targets:
-  - {fileID: 48792775}
-  - {fileID: 13216915}
-  FOV: 170
-  viewDistance: 10
-  guards:
-  - {fileID: 1108503610}
-  - {fileID: 950749495}
-  - {fileID: 43263340}
-  safeCrackNoise: 50
-  hidingSpots:
-  - {fileID: 1922136367}
-  - {fileID: 124595650}
-  - {fileID: 583558887}
-  exit: {fileID: 715715081}
-  guardHearsMe: 0
-  guardHearingDistance: 0
-  noisePathPending: 0
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 4194305
 --- !u!195 &1128359837
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -9489,7 +9456,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 7.1
+  m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -9515,6 +9482,36 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1128359839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1128359835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0bcef5d8a9489a4dbbe15a3e0e9e1a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveToLocation: {x: 0, y: 0, z: 0}
+  guards:
+  - {fileID: 950749499}
+  - {fileID: 43263344}
+  - {fileID: 1108503614}
+  targets:
+  - {fileID: 48792775}
+  - {fileID: 13216915}
+  targetIndex: 0
+  hidingSpots:
+  - {fileID: 1922136367}
+  - {fileID: 124595650}
+  - {fileID: 583558887}
+  exit: {fileID: 715715081}
+  crackSafeTime: 0
+  hasTreasure: 0
+  hideTime: 0
+  win: 0
 --- !u!4 &1128359841
 Transform:
   m_ObjectHideFlags: 0

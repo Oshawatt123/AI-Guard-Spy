@@ -8,7 +8,7 @@ public class BehaviourTreeViewWindow : EditorWindow
 {
     GameObject obj;
     GameObject prevFrameObj;
-    BT_Tree objTree;
+    BT_Tree objTree = new BT_Tree();
 
     Rect rootRect = new Rect(600, 0, 0, 0);
 
@@ -54,7 +54,6 @@ public class BehaviourTreeViewWindow : EditorWindow
         Event e = Event.current;
         if(e.type == EventType.MouseDrag)
         {
-            Debug.LogError("RM clicked");
             globalOffset.x += e.delta.x;
             globalOffset.y += e.delta.y;
         }
@@ -70,9 +69,9 @@ public class BehaviourTreeViewWindow : EditorWindow
 
         if(obj)
         {
-            if (obj.GetComponent<guardTree>())
+            if (obj.GetComponent<localTree>())
             {
-                objTree = obj.GetComponent<guardTree>().getTree();
+                objTree = obj.GetComponent<localTree>().tree;
             }
         }
 
@@ -149,7 +148,8 @@ public class BehaviourTreeViewWindow : EditorWindow
         windowNode.windowRect = rect;
 
         // set window text
-        windowNode.windowText += node.nodeType.ToString();
+        //windowNode.windowText += node.nodeType.ToString();
+        windowNode.windowText += node.GetType().ToString();
         windowRects.Add(windowNode);
 
         // set window color based on type
@@ -184,15 +184,31 @@ public class BehaviourTreeViewWindow : EditorWindow
         line.color = Color.red;
 
         // override window color if success
-        if (node.nodeState == NodeState.NODE_SUCCESS || node.nodeState == NodeState.NODE_RUNNING)
+        if (node.nodeState == NodeState.NODE_SUCCESS)
         {
             windowNode.color = Color.green;
             line.color = Color.green;
         }
+        else if (node.nodeState == NodeState.NODE_RUNNING)
+        {
+            windowNode.color = Color.yellow;
+            line.color = Color.yellow;
+        }
+        else if (node.nodeState == NodeState.NODE_FAILURE)
+        {
+            windowNode.color = Color.red;
+            line.color = Color.red;
+        }
+        else if (node.nodeState == NodeState.NODE_UNDEFINED)
+        {
+            windowNode.color = Color.grey;
+            line.color = Color.grey;
+        }
+
 
         //parent.x += offset / 3;
 
-        
+
         windowLinks.Add(line);
     }
 

@@ -21,6 +21,7 @@ public class ChaseSpy : BT_Behaviour
         agent.destination = GetPlayerPosition();
 
         Debug.Log("ChaseSpy SUCCESS");
+        nodeState = NodeState.NODE_SUCCESS;
         return NodeState.NODE_SUCCESS;
     }
 }

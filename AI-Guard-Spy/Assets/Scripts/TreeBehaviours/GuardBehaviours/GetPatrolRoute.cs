@@ -31,7 +31,7 @@ public class GetPatrolRoute : BT_Behaviour
     public override NodeState tick()
     {
         GoToNextPoint();
-
+        nodeState = NodeState.NODE_SUCCESS;
         return NodeState.NODE_SUCCESS;
     }
 }

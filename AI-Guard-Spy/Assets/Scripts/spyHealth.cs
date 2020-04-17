@@ -8,15 +8,13 @@ public class spyHealth : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        Debug.LogError(other.gameObject.name);
         if(other.gameObject.CompareTag("Guard"))
         {
             health -= 1.0f;
             if(health <= 0)
             {
-                if(!(transform.parent.GetComponent<spyControl>().Won()))
+                if(!(transform.parent.GetComponent<spyTree>().win))
                     GameObject.Find("Canvas").GetComponent<EndGame>().SpyLoss();
-                transform.parent.GetComponent<spyControl>().Die();
             }
         }
     }

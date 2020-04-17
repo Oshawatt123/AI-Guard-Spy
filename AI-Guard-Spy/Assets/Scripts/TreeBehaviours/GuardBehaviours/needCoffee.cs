@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTree;
 
-public class needSleep : BT_Behaviour
+public class needCoffee : BT_Behaviour
 {
     private Transform self;
     private guardTree localBB;
-    public needSleep(Transform _self)
+    public needCoffee(Transform _self)
     {
         self = _self;
         localBB = self.GetComponent<guardTree>();
@@ -15,11 +15,13 @@ public class needSleep : BT_Behaviour
 
     public override NodeState tick()
     {
-        if(localBB.needsSleep())
+        if(localBB.needsCoffee())
         {
-            localBB.getSleep();
+            localBB.getCoffee();
+            nodeState = NodeState.NODE_SUCCESS;
             return NodeState.NODE_SUCCESS;
         }
+        nodeState = NodeState.NODE_FAILURE;
         return NodeState.NODE_FAILURE;
     }
 }

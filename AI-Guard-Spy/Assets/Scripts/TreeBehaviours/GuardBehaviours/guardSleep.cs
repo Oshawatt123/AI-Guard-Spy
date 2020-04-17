@@ -26,12 +26,15 @@ public class guardSleep : BT_Behaviour
         if (localBB.sleeping())
         {
             Debug.LogError("guardSleep Running");
+            nodeState = NodeState.NODE_RUNNING;
             return NodeState.NODE_RUNNING;
         }
 
         localBB.endSleep();
         startedSleeping = false;
         Debug.LogError("guardSleep ended");
+
+        nodeState = NodeState.NODE_SUCCESS;
         return NodeState.NODE_SUCCESS;
     }
 }

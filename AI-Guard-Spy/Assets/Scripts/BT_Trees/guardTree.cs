@@ -3,16 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTree;
 
-public class guardTree : MonoBehaviour
+public class guardTree : localTree
 {
 
     public Transform player;
-
-    private BT_Tree tree = new BT_Tree();
-    public BT_Tree getTree()
-    {
-        return tree;
-    }
 
     // local blackboard variables
     public Transform path;
@@ -20,8 +14,6 @@ public class guardTree : MonoBehaviour
     private float chaseCoolDown;
     private float chaseCoolDowntimer = 0;
     private Vector3 lastKnownLocation;
-
-    private Vector3 moveToLocation;
 
     private bool canHearPlayer;
 
@@ -138,16 +130,6 @@ public class guardTree : MonoBehaviour
     public Vector3 getLastKnownLocation()
     {
         return lastKnownLocation;
-    }
-
-    public void setMoveToLocation(Vector3 location)
-    {
-        moveToLocation = location;
-    }
-
-    public Vector3 getMoveToLocation()
-    {
-        return moveToLocation;
     }
 
     public void PlayerHeard()

@@ -4,22 +4,24 @@ using UnityEngine;
 using UnityEngine.AI;
 using BehaviourTree;
 
-public class GoToPointOneTick : BT_Behaviour
+public class GoToPoint : BT_Behaviour
 {
     private Transform self;
-    private guardTree localBB;
+    private localTree localBB;
     private NavMeshAgent agent;
 
-    public GoToPointOneTick(Transform _self)
+    public GoToPoint(Transform _self)
     {
         self = _self;
-        localBB = self.GetComponent<guardTree>();
+        localBB = self.GetComponent<localTree>();
+
         agent = self.GetComponent<NavMeshAgent>();
     }
 
     public override NodeState tick()
     {
         agent.destination = localBB.getMoveToLocation();
+
         //Debug.Log("GoToPoint : " + agent.destination);
         var path = agent.path;
 
@@ -28,10 +30,12 @@ public class GoToPointOneTick : BT_Behaviour
             Debug.DrawLine(path.corners[i], path.corners[i + 1], Color.blue);
         }
 
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+        if (!agent.pathPending && agent.remainingDistance < 1.0f)
         {
+            nodeState = NodeState.NODE_SUCCESS;
             return NodeState.NODE_SUCCESS;
         }
-        return NodeState.NODE_SUCCESS;
+        nodeState = NodeState.NODE_RUNNING;
+        return NodeState.NODE_RUNNING;
     }
 }

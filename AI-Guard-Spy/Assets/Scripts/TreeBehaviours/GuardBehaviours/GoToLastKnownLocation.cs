@@ -29,9 +29,11 @@ public class GoToLastKnownLocation : BT_Behaviour
             }
 
             Debug.Log("LastKnownLocation SUCCESS");
+            nodeState = NodeState.NODE_SUCCESS;
             return NodeState.NODE_SUCCESS;
         }
         Debug.Log("LastKnownLocation FAILURE");
+        nodeState = NodeState.NODE_FAILURE;
         return NodeState.NODE_FAILURE;
     }
 }

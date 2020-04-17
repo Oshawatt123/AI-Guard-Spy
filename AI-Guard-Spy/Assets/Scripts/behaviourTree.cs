@@ -9,6 +9,7 @@ namespace BehaviourTree
         NODE_FAILURE,
         NODE_SUCCESS,
         NODE_RUNNING,
+        NODE_UNDEFINED
     }
 
 
@@ -22,7 +23,7 @@ namespace BehaviourTree
     public class BT_Node
     {
         public NodeType nodeType = NodeType.NODE_UNDEFINED;
-        public NodeState nodeState = NodeState.NODE_FAILURE;
+        public NodeState nodeState = NodeState.NODE_UNDEFINED;
         public List<BT_Node> childNodes = new List<BT_Node>();
         public Vector3 GetPlayerPosition() { return GameObject.FindGameObjectWithTag("Spy").transform.position; }
 
@@ -35,6 +36,11 @@ namespace BehaviourTree
         public virtual void Test()
         {
             Debug.Log("BT_Node Test");
+        }
+
+        public virtual void Reset()
+        {
+            nodeState = NodeState.NODE_UNDEFINED;
         }
     }
 
@@ -99,6 +105,16 @@ namespace BehaviourTree
         {
             Debug.Log("BT_Selector Test");
         }
+
+        public override void Reset()
+        {
+            foreach(BT_Node node in childNodes)
+            {
+                node.Reset();
+            }
+            currentNodeIndex = 0;
+            base.Reset();
+        }
     }
 
     public class BT_Sequencer : BT_Node
@@ -151,6 +167,16 @@ namespace BehaviourTree
             nodeState = NodeState.NODE_FAILURE;
             return NodeState.NODE_FAILURE;
         }
+
+        public override void Reset()
+        {
+            foreach (BT_Node node in childNodes)
+            {
+                node.Reset();
+            }
+            currentNodeIndex = 0;
+            base.Reset();
+        }
     }
     public class BT_Behaviour : BT_Node
     {
@@ -187,6 +213,11 @@ namespace BehaviourTree
         public void Tick()
         {
             root.tick();
+        }
+
+        public void resetTree()
+        {
+            root.Reset();
         }
     }
 }

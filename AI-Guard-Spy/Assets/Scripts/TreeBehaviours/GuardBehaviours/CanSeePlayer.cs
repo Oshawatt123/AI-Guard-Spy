@@ -29,6 +29,8 @@ public class CanSeePlayer : BT_Behaviour
                 Debug.Log("CanSeePlayer SUCCESS");
                 self.GetComponent<guardTree>().setMoveToLocation(GetPlayerPosition());
                 Debug.DrawLine(self.position, GetPlayerPosition(), Color.green);
+
+                nodeState = NodeState.NODE_SUCCESS;
                 return NodeState.NODE_SUCCESS;
             }
         }
@@ -43,6 +45,8 @@ public class CanSeePlayer : BT_Behaviour
 
         Debug.DrawLine(self.position, GetPlayerPosition(), Color.red);
         Debug.Log("CanSeePlayer FAILURE");
+
+        nodeState = NodeState.NODE_FAILURE;
         return NodeState.NODE_FAILURE;
     }
 }

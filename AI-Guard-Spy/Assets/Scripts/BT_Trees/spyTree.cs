@@ -57,8 +57,8 @@ public class spyTree : localTree
 
         tree.SetRoot(rootSel);
 
-        hideTime = Random.Range(2, 5);
-        crackSafeTime = Random.Range(2, 5);
+        hideTime = Random.Range(3, 8);
+        crackSafeTime = Random.Range(5, 20);
     }
 
     // Update is called once per frame

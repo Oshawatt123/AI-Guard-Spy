@@ -164,7 +164,6 @@ public class guardTree : localTree
 
     public bool needsSleep()
     {
-        Debug.LogError((fatigue < fatigueThreshold));
         return fatigue < fatigueThreshold;
     }
 

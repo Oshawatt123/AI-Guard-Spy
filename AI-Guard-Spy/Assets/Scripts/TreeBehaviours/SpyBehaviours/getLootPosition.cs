@@ -17,7 +17,6 @@ public class getLootPosition : BT_Behaviour
 
     public override NodeState tick()
     {
-        Debug.LogError("Getting loot position");
         Debug.Log(localbb.targetIndex);
 
         if(!localbb.hasTreasure)

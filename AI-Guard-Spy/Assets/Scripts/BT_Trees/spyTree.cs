@@ -77,11 +77,6 @@ public class spyTree : localTree
         hideTimer -= Time.deltaTime;
     }
 
-    public List<Transform> getGuards()
-    {
-        return guards;
-    }
-
     public void setGoToHidingSpot()
     {
         Vector3 closestSpot = hidingSpots[0].position;
@@ -124,7 +119,6 @@ public class spyTree : localTree
 
     public void crackSafe()
     {
-        Debug.LogError("cracking safe");
         hasTreasure = true;
     }
 }

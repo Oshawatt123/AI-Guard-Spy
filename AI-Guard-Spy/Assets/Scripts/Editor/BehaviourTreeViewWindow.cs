@@ -164,15 +164,12 @@ public class BehaviourTreeViewWindow : EditorWindow
 
         // create line to parent
 
-        //Debug.LogError("Rect added of type: " + node.nodeType + " at depth " + depth);
         // base case
         if (node.childNodes.Count > 0)
         {
-            //Debug.LogError("Children : " + node.childNodes.Count + " MaxOffset : " + Map(node.childNodes.Count, 4, 0, 0, maxOffset));
             int i = 0;
             foreach (BT_Node child in node.childNodes)
             {
-                //Debug.LogError(i.ToString() + "/" + node.childNodes.Count.ToString() + " = " + i / (float)(node.childNodes.Count-1));
                 ExploreNode(child, depth+1, node.childNodes.Count, (float)i/(node.childNodes.Count-1), ref rect);
                 i++;
             }

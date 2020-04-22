@@ -16,7 +16,7 @@ public class CanSeeGuard : BT_Behaviour
     public override NodeState tick()
     {
         // for every guard
-        List<Transform> guards = localBB.getGuards();
+        List<Transform> guards = localBB.guards;
 
         foreach(Transform guard in guards)
         {
